@@ -3,7 +3,6 @@ package com.example.advanceengineering.service;
 import com.example.advanceengineering.ReqRes.GetTasksResponse;
 import com.example.advanceengineering.entity.Project;
 import com.example.advanceengineering.entity.Task;
-import com.example.advanceengineering.entity.User;
 import com.example.advanceengineering.repos.TaskRepo;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +18,6 @@ public class TaskService {
         this.taskRepo = taskRepo;
     }
 
-    public Task create(String name, String title, LocalDate date, LocalDate change, User user, Task.Status status, Task.Type type, Project project) {
-        Task task = new Task(name, title, date, change, user, status, type, project);
-        return taskRepo.save(task);
-
-    }
-
-    public Task createEZ(String name, String title) {
-        Task task = new Task(name, title);
-        return taskRepo.save(task);
-    }
 
     public List<Task> getTasksByProject(Project project) {
         return taskRepo.findByProject(project);
@@ -44,5 +33,34 @@ public class TaskService {
                 task.getStatus(), task.getType(),
                 task.getUser().getUsername())));
         return getTasksResponses;
+    }
+
+    public List<Task> getTasks() {
+        return taskRepo.findAll();
+    }
+
+    public void deleteTask(Long id) {
+        taskRepo.deleteById(id);
+    }
+
+    //TODO проработать optional
+    public Task updateTask(Task task, String name, String title,
+                           Task.Status status,
+                           Task.Type type) {
+        if (name != null) {
+            task.setName(name);
+        }
+        if (title != null) {
+            task.setTitle(title);
+        }
+        if (status != null) {
+            task.setStatus(status);
+            task.setStatusChangeTime(LocalDate.now());
+        }
+        if (type != null) {
+            task.setType(type);
+        }
+        return taskRepo.save(task);
+
     }
 }

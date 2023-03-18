@@ -39,7 +39,7 @@ public class ProjectService {
         projectRepo.deleteById(id);
 
     }
-
+    //TODO проработать optional
     public Project updateProject(Long id, String name, Long parent_id) {
         Project project = projectRepo.findById(id).get();
         project.setName(name);
