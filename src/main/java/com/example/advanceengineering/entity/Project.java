@@ -19,6 +19,13 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> tasks;
 
+    public Project(String name) {
+        this.name = name;
+    }
+
+    public Project() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -57,13 +64,5 @@ public class Project {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
-    }
-
-    public Project(String name) {
-        this.name = name;
-    }
-
-
-    public Project() {
     }
 }

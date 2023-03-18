@@ -21,7 +21,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    @ApiOperation("Create project")
+    @ApiOperation("Создать проект")
     public ResponseEntity<CreateProjectResponse> createProject(@RequestBody CreateProjectRequest createProjectRequest) {
         Project project = projectService.create(createProjectRequest.getName());
         CreateProjectResponse createProjectResponse = new CreateProjectResponse(project.getName());
@@ -30,10 +30,14 @@ public class ProjectController {
 
     @GetMapping
     @ApiOperation("Получить список всех проектов")
-    public ResponseEntity<List<GetProjectResponse>> getProjects() {
+    public ResponseEntity<List<GetProjectsResponse>> getProjects() {
         List<Project> projects = projectService.getProjects();
-        List<GetProjectResponse> getProjectResponse = new ArrayList<>();
-        projects.forEach(project -> getProjectResponse.add(new GetProjectResponse(project.getName())));
+        List<GetProjectsResponse> getProjectResponse = new ArrayList<>();
+        projects.forEach(project -> {
+            if (!projectService.hasParent(project)) {
+                getProjectResponse.add(new GetProjectsResponse(project.getName(), project.getTasks()));
+            }
+        });
         return ResponseEntity.ok(getProjectResponse);
     }
 
@@ -51,9 +55,16 @@ public class ProjectController {
     }
 
     @GetMapping(value = "{id}")
-    public ResponseEntity<GetProjectResponse> getProject(@PathVariable Long id) {
+    public ResponseEntity<GetProjectInfoResponse> getProjectInfo(@PathVariable Long id) {
         Optional<Project> project = projectService.getProject(id);
-        GetProjectResponse getProjectResponse = new GetProjectResponse(project.get().getName());
-        return ResponseEntity.ok(getProjectResponse);
+        List<Project> projects = projectService.subProjects(project.get());
+        List<GetProjectsResponse> getProjectsResponses = new ArrayList<>();
+        projects.forEach(project1 -> {
+            getProjectsResponses.add(new GetProjectsResponse(project1.getName(), project1.getTasks()));
+        });
+        GetProjectInfoResponse getProjectInfoResponse = new GetProjectInfoResponse(project.get().getName(),
+                project.get().getTasks(),
+                getProjectsResponses);
+        return ResponseEntity.ok(getProjectInfoResponse);
     }
 }

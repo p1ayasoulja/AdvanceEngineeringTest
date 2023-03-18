@@ -2,7 +2,6 @@ package com.example.advanceengineering.entity;
 
 import jakarta.persistence.*;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
 
 @jakarta.persistence.Entity
@@ -45,14 +44,6 @@ public class Task {
     public Task(String name, String title) {
         this.name = name;
         this.title = title;
-    }
-
-    public enum Status {
-        New, Progress, Done
-    }
-
-    public enum Type {
-        Manager, Specialist
     }
 
     public Long getId() {
@@ -125,5 +116,13 @@ public class Task {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public enum Status {
+        New, Progress, Done
+    }
+
+    public enum Type {
+        Manager, Specialist
     }
 }

@@ -1,26 +1,33 @@
 package com.example.advanceengineering.ReqRes;
 
+import com.example.advanceengineering.entity.Task;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
-@Api("Вывод списка проектов")
+@Api("Получить проект")
 public class GetProjectsResponse {
-    @ApiModelProperty("Список проектов")
-    private final List<GetProjectResponse> projectList;
+    @ApiModelProperty("Имя проекта")
+    private String name;
+    @ApiModelProperty("Задачи проекта")
+    private  List<Task> taskList;
 
-    public GetProjectsResponse(List<GetProjectResponse> projectList) {
-        this.projectList = projectList;
+
+    public GetProjectsResponse(@JsonProperty("name") String name,
+                               @JsonProperty("project tasks") List<Task> taskList) {
+        this.name = name;
+        this.taskList = taskList;
     }
 
-    @JsonProperty("projectList")
-    public List<GetProjectResponse> getProjectsResponse() {
-        return projectList;
+
+    public String getName() {
+        return name;
     }
 
-    public List<GetProjectResponse> getProjectList() {
-        return projectList;
+    public List<Task> getTaskList() {
+        return taskList;
     }
+
 }

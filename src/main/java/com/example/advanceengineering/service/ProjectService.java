@@ -4,6 +4,7 @@ import com.example.advanceengineering.entity.Project;
 import com.example.advanceengineering.repos.ProjectRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,4 +55,23 @@ public class ProjectService {
             return Optional.empty();
         }
     }
+
+    public boolean hasParent(Project project) {
+        return project.getParent() != null;
+    }
+
+    public List<Project> subProjects(Project project) {
+        List<Project> projects = projectRepo.findAll();
+        List<Project> subProjectlist = new ArrayList<>();
+        projects.forEach(project1 -> {
+            if (project1.getParent() != null) {
+                if (project.getId() == project1.getParent().getId()) {
+                    subProjectlist.add(project1);
+                }
+            }
+        });
+        return subProjectlist;
+
+    }
+
 }
