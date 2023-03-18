@@ -2,7 +2,9 @@ package com.example.advanceengineering.controller;
 
 import com.example.advanceengineering.ReqRes.*;
 import com.example.advanceengineering.entity.Project;
+import com.example.advanceengineering.entity.Task;
 import com.example.advanceengineering.service.ProjectService;
+import com.example.advanceengineering.service.TaskService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,11 @@ import java.util.Optional;
 @RequestMapping("/projects")
 public class ProjectController {
     private final ProjectService projectService;
+    private final TaskService taskService;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, TaskService taskService) {
         this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     @PostMapping
@@ -30,15 +34,18 @@ public class ProjectController {
 
     @GetMapping
     @ApiOperation("Получить список всех проектов")
-    public ResponseEntity<List<GetProjectsResponse>> getProjects() {
+    public ResponseEntity<List<GetProjectNames>> getProjects() {
         List<Project> projects = projectService.getProjects();
-        List<GetProjectsResponse> getProjectResponse = new ArrayList<>();
+        List<GetProjectNames> getProjectNames = new ArrayList<>();
         projects.forEach(project -> {
+            List<Task> tasks = taskService.getTasksByProject(project);
+            List<GetTasksResponse> getTasksResponses = new ArrayList<>();
+            taskService.sortTasks(tasks, getTasksResponses);
             if (!projectService.hasParent(project)) {
-                getProjectResponse.add(new GetProjectsResponse(project.getName(), project.getTasks()));
+                getProjectNames.add(new GetProjectNames(project.getName()));
             }
         });
-        return ResponseEntity.ok(getProjectResponse);
+        return ResponseEntity.ok(getProjectNames);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -47,7 +54,7 @@ public class ProjectController {
         return ResponseEntity.ok("Deleted");
     }
 
-    @PostMapping(value = "/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<UpdateProjectResponse> updateProject(@PathVariable("id") Long id, @RequestBody UpdateProjectRequest updateProjectRequest) {
         Project project = projectService.updateProject(id, updateProjectRequest.getName(), updateProjectRequest.getParent_id());
         UpdateProjectResponse updateProjectResponse = new UpdateProjectResponse(project.getName());
@@ -57,14 +64,17 @@ public class ProjectController {
     @GetMapping(value = "{id}")
     public ResponseEntity<GetProjectInfoResponse> getProjectInfo(@PathVariable Long id) {
         Optional<Project> project = projectService.getProject(id);
-        List<Project> projects = projectService.subProjects(project.get());
-        List<GetProjectsResponse> getProjectsResponses = new ArrayList<>();
-        projects.forEach(project1 -> {
-            getProjectsResponses.add(new GetProjectsResponse(project1.getName(), project1.getTasks()));
-        });
-        GetProjectInfoResponse getProjectInfoResponse = new GetProjectInfoResponse(project.get().getName(),
-                project.get().getTasks(),
-                getProjectsResponses);
+
+        List<Project> subProjects = projectService.subProjects(project.get());
+        List<GetProjectNames> getSubProjects = new ArrayList<>();
+        projectService.refactorProjects(subProjects, getSubProjects);
+
+        List<Task> tasks = taskService.getTasksByProject(project.get());
+        List<GetTasksResponse> getTasksResponses = new ArrayList<>();
+        taskService.sortTasks(tasks, getTasksResponses);
+
+        GetProjectInfoResponse getProjectInfoResponse = new GetProjectInfoResponse(project.get().getName(), getTasksResponses,
+                getSubProjects);
         return ResponseEntity.ok(getProjectInfoResponse);
     }
 }

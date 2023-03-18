@@ -1,5 +1,6 @@
 package com.example.advanceengineering.service;
 
+import com.example.advanceengineering.ReqRes.GetProjectNames;
 import com.example.advanceengineering.entity.Project;
 import com.example.advanceengineering.repos.ProjectRepo;
 import org.springframework.stereotype.Service;
@@ -71,7 +72,11 @@ public class ProjectService {
             }
         });
         return subProjectlist;
+    }
 
+    public List<GetProjectNames> refactorProjects(List<Project> projects, List<GetProjectNames> getSubProjects) {
+        projects.forEach(project -> getSubProjects.add(new GetProjectNames(project.getName())));
+        return getSubProjects;
     }
 
 }

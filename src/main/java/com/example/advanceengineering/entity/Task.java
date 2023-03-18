@@ -21,7 +21,9 @@ public class Task {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+    @Column(name = "status")
     private Status status;
+    @Column(name = "type")
     private Type type;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id")
