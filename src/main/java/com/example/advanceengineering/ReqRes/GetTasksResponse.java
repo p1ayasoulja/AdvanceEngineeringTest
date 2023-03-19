@@ -62,4 +62,32 @@ public class GetTasksResponse {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public LocalDate getCreateDate() {
+        return createDate;
+    }
+
+    public LocalDate getStatusChangeTime() {
+        return StatusChangeTime;
+    }
+
+    public Task.Status getStatus() {
+        return status;
+    }
+
+    public Task.Type getType() {
+        return type;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 }

@@ -42,5 +42,6 @@ public class UpdateTaskRequest {
     public Task.Type getType() {
         return type;
     }
+
 }
 

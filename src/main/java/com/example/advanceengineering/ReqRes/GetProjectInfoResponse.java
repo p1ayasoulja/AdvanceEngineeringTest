@@ -32,4 +32,16 @@ public class GetProjectInfoResponse {
     public void setSubprojects(List<GetProjectNames> subprojects) {
         this.subprojects = subprojects;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<GetTasksResponse> getTaskList() {
+        return taskList;
+    }
+
+    public List<GetProjectNames> getSubprojects() {
+        return subprojects;
+    }
 }
