@@ -19,6 +19,7 @@ public class ProjectService {
 
     /**
      * Создать проект
+     *
      * @param name имя проекта
      * @return сущность проекта
      */
@@ -29,6 +30,7 @@ public class ProjectService {
 
     /**
      * Получить список проектов
+     *
      * @return список проектов
      */
 
@@ -38,6 +40,7 @@ public class ProjectService {
 
     /**
      * Удалить проект
+     *
      * @param id идентификатор проекта
      */
     public void delete(Long id) {
@@ -56,8 +59,9 @@ public class ProjectService {
 
     /**
      * Обновить проект
-     * @param id идентификатор проекта
-     * @param name новое имя проекта
+     *
+     * @param id        идентификатор проекта
+     * @param name      новое имя проекта
      * @param parent_id новый идентификатор родительского проекта
      * @return обновленный проект
      */
@@ -72,7 +76,8 @@ public class ProjectService {
 
     /**
      * Получить проект
-     * @param id  идентификатор проекта
+     *
+     * @param id идентификатор проекта
      * @return сущность проекта
      */
     public Optional<Project> getProject(Long id) {
@@ -85,6 +90,7 @@ public class ProjectService {
 
     /**
      * Имеет ли проект родителя
+     *
      * @param project сущность проекта
      * @return имеет ли проект родителя
      */
@@ -94,6 +100,7 @@ public class ProjectService {
 
     /**
      * Получить список подпроектов
+     *
      * @param project сущность проекта
      * @return список подпроектов проекта
      */
@@ -112,7 +119,8 @@ public class ProjectService {
 
     /**
      * Получить список проектов с нужными полями
-     * @param projects список проектов с одними полями для показа
+     *
+     * @param projects       список проектов с одними полями для показа
      * @param getSubProjects список проектов с нужными полями для показа
      * @return список проектов с нужными полями для показа
      */

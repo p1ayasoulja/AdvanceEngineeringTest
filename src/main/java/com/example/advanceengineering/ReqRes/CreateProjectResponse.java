@@ -13,12 +13,12 @@ public class CreateProjectResponse {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @JsonProperty("name")
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 }

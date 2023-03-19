@@ -1,8 +1,8 @@
 package com.example.advanceengineering.controller;
 
-import com.example.advanceengineering.ReqRes.UpdateTaskRequest;
 import com.example.advanceengineering.ReqRes.CreateTaskRequest;
 import com.example.advanceengineering.ReqRes.GetTasksResponse;
+import com.example.advanceengineering.ReqRes.UpdateTaskRequest;
 import com.example.advanceengineering.entity.Role;
 import com.example.advanceengineering.entity.Task;
 import com.example.advanceengineering.entity.User;
@@ -75,8 +75,8 @@ public class TaskController {
     @PutMapping("/{id}")
     @ApiOperation("Обновить задачу")
     public ResponseEntity<?> updateTask(@PathVariable("id") Long id,
-                                             @RequestBody UpdateTaskRequest updateTaskRequest,
-                                             @AuthenticationPrincipal User user) {
+                                        @RequestBody UpdateTaskRequest updateTaskRequest,
+                                        @AuthenticationPrincipal User user) {
         Optional<Task> task = taskService.getTask(id);
         if (task.isPresent()) {
             if (user.getRoles().contains(Role.ADMIN)) {
@@ -91,6 +91,7 @@ public class TaskController {
             return ResponseEntity.ok(getTasksResponse);
         } else return ResponseEntity.ok("Task is not present");
     }
+
     @PostMapping
     @ApiOperation("Создать задачу")
     public ResponseEntity<GetTasksResponse> createTask(@RequestBody CreateTaskRequest createTaskRequest,

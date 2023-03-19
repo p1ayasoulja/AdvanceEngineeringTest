@@ -19,10 +19,12 @@ public class GetProjectsResponse {
         this.name = name;
         this.taskList = taskList;
     }
+
     @JsonProperty("name")
     public String getName() {
         return name;
     }
+
     @JsonProperty("taskList")
 
     public List<GetTasksResponse> getTaskList() {

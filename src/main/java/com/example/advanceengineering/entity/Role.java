@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Table(name = "user_role")
 public enum Role implements GrantedAuthority {
-    USER,ADMIN;
+    USER, ADMIN;
 
     @Override
     public String getAuthority() {

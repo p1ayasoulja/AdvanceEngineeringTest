@@ -1,7 +1,6 @@
 package com.example.advanceengineering.entity;
 
 import javax.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
@@ -42,6 +41,7 @@ public class Task {
         this.type = type;
         this.project = project;
     }
+
     public Long getId() {
         return id;
     }

@@ -22,6 +22,7 @@ public class TaskService {
 
     /**
      * Получить задачу по проекту
+     *
      * @param project сущность проекта
      * @return список задач проекта
      */
@@ -31,6 +32,7 @@ public class TaskService {
 
     /**
      * Получить задачу
+     *
      * @param id идентификатор задачи
      * @return сущность задачи
      */
@@ -41,8 +43,9 @@ public class TaskService {
 
     /**
      * Получить список задач с нужными полями
-     * @param tasks список задач
-     * @param getTasksResponses  список задач с нужными полями
+     *
+     * @param tasks             список задач
+     * @param getTasksResponses список задач с нужными полями
      * @return список задач с нужными полями
      */
     public List<GetTasksResponse> sortTasks(List<Task> tasks, List<GetTasksResponse> getTasksResponses) {
@@ -55,6 +58,7 @@ public class TaskService {
 
     /**
      * Получить все задачи
+     *
      * @return список всех задач
      */
     public List<Task> getTasks() {
@@ -63,11 +67,12 @@ public class TaskService {
 
     /**
      * Обновление задачи админом
-     * @param task сущность задачи
-     * @param name имя задачи
-     * @param title описание задачи
+     *
+     * @param task   сущность задачи
+     * @param name   имя задачи
+     * @param title  описание задачи
      * @param status статус задачи
-     * @param type тип задачи
+     * @param type   тип задачи
      * @return обновленная задача
      */
     public Task adminUpdateTask(Task task, String name, String title,
@@ -92,7 +97,8 @@ public class TaskService {
 
     /**
      * Обновление задачи пользователем
-     * @param task сущность задачи
+     *
+     * @param task   сущность задачи
      * @param status статус задачи
      * @return обновленная задача
      */
@@ -109,14 +115,15 @@ public class TaskService {
 
     /**
      * Создание проекта
-     * @param name имя
-     * @param title описание
-     * @param createTime дата создания
+     *
+     * @param name             имя
+     * @param title            описание
+     * @param createTime       дата создания
      * @param statusChangeTime дата последнего изменения статуса
-     * @param user автор з
-     * @param status статус
-     * @param type тип
-     * @param project родительский проект
+     * @param user             автор з
+     * @param status           статус
+     * @param type             тип
+     * @param project          родительский проект
      * @return сущность задачи
      */
     public Task createTask(String name, String title, LocalDate createTime,
@@ -129,7 +136,8 @@ public class TaskService {
 
     /**
      * Проверка на авторство задачи
-     * @param id идентификатор задачи
+     *
+     * @param id   идентификатор задачи
      * @param user пользователь
      * @return пользователь автор задачи или нет
      */
