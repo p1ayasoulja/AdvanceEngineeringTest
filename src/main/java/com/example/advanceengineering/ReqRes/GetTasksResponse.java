@@ -29,7 +29,7 @@ public class GetTasksResponse {
         this.name = name;
         this.title = title;
         this.createDate = createDate;
-        StatusChangeTime = statusChangeTime;
+        this.StatusChangeTime = statusChangeTime;
         this.status = status;
         this.type = type;
         this.username = username;

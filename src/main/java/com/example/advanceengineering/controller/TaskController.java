@@ -1,8 +1,10 @@
 package com.example.advanceengineering.controller;
 
+import com.example.advanceengineering.ReqRes.CreateTaskRequest;
 import com.example.advanceengineering.ReqRes.GetTasksResponse;
 import com.example.advanceengineering.ReqRes.UpdateTaskRequest;
 import com.example.advanceengineering.entity.Task;
+import com.example.advanceengineering.service.ProjectService;
 import com.example.advanceengineering.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +18,11 @@ import java.util.Optional;
 @RestController
 public class TaskController {
     private final TaskService taskService;
+    private final ProjectService projectService;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, ProjectService projectService) {
         this.taskService = taskService;
+        this.projectService = projectService;
     }
 
     @GetMapping("/{id}")
@@ -26,7 +30,7 @@ public class TaskController {
         Optional<Task> task = taskService.getTask(id);
         if (task.isPresent()) {
             GetTasksResponse getTasksResponse = new GetTasksResponse(task.get().getName(),
-                    task.get().getTitle(), LocalDate.now(), LocalDate.now(),
+                    task.get().getTitle(), task.get().getCreateTime(), task.get().getStatusChangeTime(),
                     task.get().getStatus(), task.get().getType(),
                     task.get().getUser().getUsername());
             return ResponseEntity.ok(getTasksResponse);
@@ -41,7 +45,7 @@ public class TaskController {
         List<GetTasksResponse> getTasksResponses = new ArrayList<>();
         tasks.forEach(task -> {
             getTasksResponses.add(new GetTasksResponse(task.getName(),
-                    task.getTitle(), LocalDate.now(), LocalDate.now(),
+                    task.getTitle(), task.getCreateTime(), task.getStatusChangeTime(),
                     task.getStatus(), task.getType(),
                     task.getUser().getUsername()));
         });
@@ -49,6 +53,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
+    //todo is user author?
     public ResponseEntity<?> deleteTask(@PathVariable("id") Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.ok("Task deleted");
@@ -64,6 +69,17 @@ public class TaskController {
 
         GetTasksResponse getTasksResponse = new GetTasksResponse(task.getName(), task.getTitle(), task.getCreateTime(), task.getStatusChangeTime(),
                 task.getStatus(), task.getType(), task.getName());
+        return ResponseEntity.ok(getTasksResponse);
+    }
+
+    @PostMapping
+    public ResponseEntity<GetTasksResponse> createTask(@RequestBody CreateTaskRequest createTaskRequest) {
+        Task task = taskService.createTask(createTaskRequest.getName(), createTaskRequest.getTitle(),
+                LocalDate.now(), LocalDate.now(),
+                createTaskRequest.getStatus(),
+                //TODO username
+                createTaskRequest.getType(), projectService.getProject(createTaskRequest.getProject_id()).get());
+        GetTasksResponse getTasksResponse = new GetTasksResponse(task.getName(), task.getTitle(), task.getCreateTime(), task.getStatusChangeTime(), task.getStatus(), task.getType(), task.getName());
         return ResponseEntity.ok(getTasksResponse);
     }
 }

@@ -63,4 +63,12 @@ public class TaskService {
         return taskRepo.save(task);
 
     }
+
+    public Task createTask(String name, String title, LocalDate createTime,
+                           LocalDate statusChangeTime, Task.Status status,
+                           Task.Type type, Project project) {
+        Task task = new Task(name, title, createTime, statusChangeTime, status, type, project);
+        return taskRepo.save(task);
+    }
 }
+

@@ -43,6 +43,16 @@ public class Task {
         this.project = project;
     }
 
+    public Task(String name, String title, LocalDate createTime, LocalDate statusChangeTime, Status status, Type type, Project project) {
+        this.name = name;
+        this.title = title;
+        this.createTime = createTime;
+        StatusChangeTime = statusChangeTime;
+        this.status = status;
+        this.type = type;
+        this.project = project;
+    }
+
     public Task(String name, String title) {
         this.name = name;
         this.title = title;
