@@ -1,9 +1,12 @@
 package com.example.advanceengineering.ReqRes;
 
 import com.example.advanceengineering.entity.Task;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 
+@Api("Запрос на обновление задачи")
 public class UpdateTaskRequest {
     @ApiModelProperty("Имя задачи")
     private final String name;
@@ -14,7 +17,8 @@ public class UpdateTaskRequest {
     @ApiModelProperty("Тип задачи")
     private final Task.Type type;
 
-    public UpdateTaskRequest(@JsonProperty("name") String name,@JsonProperty("title") String title,
+    @JsonCreator
+    public UpdateTaskRequest(@JsonProperty("name") String name, @JsonProperty("title") String title,
                              @JsonProperty("status") Task.Status status,
                              @JsonProperty("type") Task.Type type) {
         this.name = name;
@@ -26,12 +30,15 @@ public class UpdateTaskRequest {
     public String getName() {
         return name;
     }
+
     public String getTitle() {
         return title;
     }
+
     public Task.Status getStatus() {
         return status;
     }
+
     public Task.Type getType() {
         return type;
     }

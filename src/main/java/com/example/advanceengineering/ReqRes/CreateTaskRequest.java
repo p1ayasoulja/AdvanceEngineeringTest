@@ -1,11 +1,12 @@
 package com.example.advanceengineering.ReqRes;
 
 import com.example.advanceengineering.entity.Task;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 
-@Api
+@Api("Запрос на создание задачи")
 public class CreateTaskRequest {
     @ApiModelProperty("Имя задачи")
     private final String name;
@@ -18,6 +19,7 @@ public class CreateTaskRequest {
     @ApiModelProperty("Идентификатор проекта")
     private final Long project_id;
 
+    @JsonCreator
     public CreateTaskRequest(@JsonProperty("name") String name, @JsonProperty("title") String title,
                              @JsonProperty("status") Task.Status status, @JsonProperty("type") Task.Type type,
                              @JsonProperty("project id") Long project_id) {

@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
-@Api("Получить проект")
+@Api("Ответ на получение проектов")
 public class GetProjectsResponse {
     @ApiModelProperty("Имя проекта")
     private String name;
@@ -19,9 +19,11 @@ public class GetProjectsResponse {
         this.name = name;
         this.taskList = taskList;
     }
+    @JsonProperty("name")
     public String getName() {
         return name;
     }
+    @JsonProperty("taskList")
 
     public List<GetTasksResponse> getTaskList() {
         return taskList;

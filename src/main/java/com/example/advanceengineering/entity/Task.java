@@ -1,10 +1,10 @@
 package com.example.advanceengineering.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.time.LocalDate;
 
-@jakarta.persistence.Entity
+@Entity
 @Table(name = "Tasks")
 public class Task {
     @Id
@@ -14,9 +14,9 @@ public class Task {
     private String name;
     @Column(name = "title")
     private String title;
-    @Column(name = "createTime")
+    @Column(name = "create_time")
     private LocalDate createTime;
-    @Column(name = "StatusChangeTime")
+    @Column(name = "status_change_time")
     private LocalDate StatusChangeTime;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -42,22 +42,6 @@ public class Task {
         this.type = type;
         this.project = project;
     }
-
-    public Task(String name, String title, LocalDate createTime, LocalDate statusChangeTime, Status status, Type type, Project project) {
-        this.name = name;
-        this.title = title;
-        this.createTime = createTime;
-        StatusChangeTime = statusChangeTime;
-        this.status = status;
-        this.type = type;
-        this.project = project;
-    }
-
-    public Task(String name, String title) {
-        this.name = name;
-        this.title = title;
-    }
-
     public Long getId() {
         return id;
     }

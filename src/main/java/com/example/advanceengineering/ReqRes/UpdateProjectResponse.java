@@ -14,6 +14,7 @@ public class UpdateProjectResponse {
 
     }
 
+    @JsonProperty("name")
     public String getName() {
         return name;
     }

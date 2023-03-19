@@ -7,6 +7,7 @@ import com.example.advanceengineering.service.ProjectService;
 import com.example.advanceengineering.service.TaskService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class ProjectController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ApiOperation("Создать проект")
     public ResponseEntity<CreateProjectResponse> createProject(@RequestBody CreateProjectRequest createProjectRequest) {
         Project project = projectService.create(createProjectRequest.getName());
@@ -49,12 +51,16 @@ public class ProjectController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ApiOperation("Удалить проект")
     public ResponseEntity<?> DeleteProject(@PathVariable("id") Long id) {
         projectService.delete(id);
         return ResponseEntity.ok("Project deleted");
     }
 
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ApiOperation("Обновить проект")
     public ResponseEntity<UpdateProjectResponse> updateProject(@PathVariable("id") Long id, @RequestBody UpdateProjectRequest updateProjectRequest) {
         Project project = projectService.updateProject(id, updateProjectRequest.getName(), updateProjectRequest.getParent_id());
         UpdateProjectResponse updateProjectResponse = new UpdateProjectResponse(project.getName());
@@ -62,6 +68,8 @@ public class ProjectController {
     }
 
     @GetMapping(value = "{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ApiOperation("Посмотреть всю информацию о проекте")
     public ResponseEntity<GetProjectInfoResponse> getProjectInfo(@PathVariable Long id) {
         Optional<Project> project = projectService.getProject(id);
 
