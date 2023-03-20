@@ -84,7 +84,7 @@ public class TaskService {
         if (title != null) {
             task.setTitle(title);
         }
-        if (status != null) {
+        if (status == Task.Status.Done || status == Task.Status.Progress) {
             task.setStatus(status);
             task.setStatusChangeTime(LocalDate.now());
         }

@@ -35,7 +35,7 @@ public class Task {
         this.name = name;
         this.title = title;
         this.createTime = createTime;
-        StatusChangeTime = statusChangeTime;
+        this.StatusChangeTime = statusChangeTime;
         this.user = user;
         this.status = status;
         this.type = type;
@@ -79,7 +79,7 @@ public class Task {
     }
 
     public void setStatusChangeTime(LocalDate statusChangeTime) {
-        StatusChangeTime = statusChangeTime;
+        this.StatusChangeTime = statusChangeTime;
     }
 
     public User getUser() {
